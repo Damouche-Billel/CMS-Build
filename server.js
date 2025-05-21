@@ -8,11 +8,11 @@ const path = require('path');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config();
 const fileUpload = require('express-fileupload');
 
 //Load environment variables
-dotenv.config();
+//dotenv.config();
 
 //Import routes
 const authRoutes = require('./routes/auth');
@@ -26,7 +26,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 //Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fennecFC', {
+mongoose.connect(process.env.DB_URI || 'mongodb://localhost:27017/fennecFC', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
