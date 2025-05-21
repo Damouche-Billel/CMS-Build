@@ -1,7 +1,8 @@
 const crypto = require('crypto');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const sendEmail = require('../utils/email');
-const bcrypt = require('bcryptjs'); //Make sure this is at the top
+const bcrypt = require('bcryptjs');
 
 //Register user
 exports.register = async (req, res) => {
@@ -9,8 +10,22 @@ exports.register = async (req, res) => {
     console.log('Registration attempt:', req.body.username);
     const { username, email, password } = req.body;
 
-    // Log the connection status
-    console.log('Database connection state:', mongoose.connection.readyState);
+    // Validate input
+    if (!username || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields'
+      });
+    }
+
+    // Check database connection
+    if (mongoose.connection.readyState !== 1) {
+      console.error('Database not connected. Connection state:', mongoose.connection.readyState);
+      return res.status(500).json({
+        success: false,
+        message: 'Database connection error'
+      });
+    }
 
     const userExists = await User.findOne({ 
       $or: [{ email }, { username }] 
