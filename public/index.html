@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Fennec FC CMS</title>
+
+    <!-- This sets the tab icon and links the main stylesheet -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body style="background-color: #1c1c1c;">
+    <!-- The header below shows the Fennec FC logo and the CMS title -->
+    <header>
+        <div class="cms-header">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CONTENT MANAGEMENT SYSTEM</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- This section welcomes users and gives a quick intro to the CMS -->
+    <section class="bg-2" style="min-height: 70vh;">
+        <div class="container" style="max-width: 600px; text-align: center;">
+            <!-- Big welcome message at the top -->
+            <span class="leading-text centre style-2">WELCOME</span>
+            
+            <p style="margin-bottom: 30px;">
+                Welcome to the Fennec FC Content Management System. This platform allows authorized users to manage website content including news articles, fixtures, merchandise, and user accounts.
+            </p>
+            
+            <!-- Login and registration links for users -->
+            <div style="margin: 40px 0; display: flex; flex-direction: column; gap: 15px; align-items: center;"></div>
+                <a href="login.html" class="btn-primary" style="min-width: 200px;">Login to CMS</a>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    New user? <a href="register.html" style="color: #d4b24b; text-decoration: none;">Register here</a>
+                </p>
+            </div>
+            
+            <!-- Quick list of what you can do in the CMS -->
+            <div style="margin-top: 50px; border-top: 1px solid #333; padding-top: 20px;">
+                <h3 style="color: #d4b24b; margin-bottom: 15px;">CMS Features</h3>
+                <ul style="text-align: left; line-height: 1.6; list-style-type: none; padding: 0;">
+                    <li>📰 News article management</li>
+                    <li>🗓️ Fixture scheduling and results</li>
+                    <li>🛍️ Merchandise catalog management</li>
+                    <li>👥 User access control</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple footer with copyright -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- This script checks if the user is already logged in and sends them to the dashboard if so -->
+    <script>
+        // When the page loads, let's see if the user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('fennec_user');
+            
+            if (userData) {
+                // If we find user info, send them straight to the dashboard
+                window.location.href = 'dashboard.html';
+            }
+            
+            // If not, they stay here on the welcome page
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | Fennec FC CMS</title>
+
+    <!-- Add favicon and main stylesheet -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body style="background-color: #1c1c1c;">
+    <!-- Site header with logo and titles -->
+    <header>
+        <div class="cms-header">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CONTENT MANAGEMENT SYSTEM</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main registration area -->
+    <section class="bg-2" style="min-height: 70vh;">
+        <div class="container">
+            <!-- Page heading for registration -->
+            <span class="leading-text centre style-2">REGISTER</span>
+
+            <!-- User registration form starts here -->
+            <form class="contact-form" id="registerForm">
+                <div id="error-message" class="error-message"></div>
+                
+                <label for="reg-username">Username</label>
+                <input type="text" id="reg-username" name="username" required>
+
+                <label for="reg-email">Email</label>
+                <input type="email" id="reg-email" name="email" required>
+
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" name="password" required>
+
+                <label for="reg-confirm-password">Confirm Password</label>
+                <input type="password" id="reg-confirm-password" name="confirmPassword" required>
+
+                <p class="form-info">
+                    By registering, you agree to receive a verification email and follow the account verification process.
+                    Your account will need to be approved by an admin before you can access the CMS.
+                </p>
+
+                <button type="submit" class="btn-primary btn-inline">Register</button>
+                
+                <p class="form-link">
+                    Already have an account? <a href="login.html">Login here</a>
+                </p>
+            </form>
+            <!-- End of registration form -->
+
+            <!-- Support contact details for users who need help -->
+            <div class="support-info">
+                <h4>Technical Support</h4>
+                <p>Email: admin@fennecfc.com</p>
+                <p>Phone: +44 7388521835</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple footer with copyright -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- Load authentication logic for registration -->
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

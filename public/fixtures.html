@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Fixtures | Fennec FC CMS</title>
+
+  <!-- Brand icon and stylesheets for the dashboard -->
+  <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/content.css">
+  <link rel="stylesheet" href="css/fixtures.css">
+</head>
+
+<body>
+  <!-- This is the main header at the top, showing the logo and user info -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <div class="nav-logo">
+        <div class="nav-title">
+          <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+          <h1>FENNEC FC</h1>
+          <h2>CMS DASHBOARD</h2>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        <span id="username-display">Getting User ..</span>
+        <div class="user-actions">
+          <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- The main layout: sidebar on the left, main content on the right -->
+  <div class="dashboard-container">
+    <!-- Sidebar navigation for switching between dashboard sections -->
+    <aside class="dashboard-sidebar">
+      <nav class="dashboard-nav">
+        <ul>
+          <li><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+          <li><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+          <li class="active"><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+          
+          <li><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+          <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+          <li><a href="profile.html"><i class="icon-settings"></i> Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- This is where the main page content goes -->
+    <main class="dashboard-main">
+      <div class="content-header">
+        <h2>Fixtures Management</h2>
+        <button id="add-fixture-btn" class="btn-primary">Add New Fixture</button>
+      </div>
+
+      <!-- Here we show all upcoming fixtures for the team -->
+      <div class="fixtures-section">
+        <h3>Upcoming Fixtures</h3>
+        <div id="upcoming-fixtures" class="fixtures-grid">
+          <!-- The list of upcoming fixtures will appear here -->
+          <div class="loading">Loading fixtures...</div>
+        </div>
+      </div>
+
+      <!-- This section displays the most recent results -->
+      <div class="fixtures-section">
+        <h3>Recent Results</h3>
+        <div id="recent-results" class="fixtures-grid">
+          <!-- The latest results will be loaded here -->
+          <div class="loading">Loading results...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal for adding or editing a fixture (pops up when needed) -->
+  <div id="fixture-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+    <div class="modal-header">
+      <h3>Add Fixture</h3>
+      <span class="modal-close" style="cursor:pointer;">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="fixture-form">
+      <div class="form-group">
+        <label for="fixture-team">Team</label>
+        <select id="fixture-team" required>
+        <option value="home">Home Team</option>
+        <option value="away">Away Team</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fixture-opponent">Opponent</label>
+        <input type="text" id="fixture-opponent" required>
+      </div>
+      <div class="form-group">
+        <label for="fixture-location">Location</label>
+        <select id="fixture-location" required>
+        <option value="home">Home</option>
+        <option value="away">Away</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fixture-date">Date</label>
+        <input type="date" id="fixture-date" required>
+      </div>
+      <div class="form-group">
+        <label for="fixture-time">Time</label>
+        <input type="time" id="fixture-time" required>
+      </div>
+      <div class="form-group">
+        <label for="fixture-competition">Competition</label>
+        <input type="text" id="fixture-competition" required>
+      </div>
+      <div class="form-group">
+        <label for="fixture-tickets-available">Tickets Available</label>
+        <input type="checkbox" id="fixture-tickets-available">
+      </div>
+      <div class="form-group">
+        <label for="fixture-tickets-url">Tickets URL</label>
+        <input type="url" id="fixture-tickets-url">
+      </div>
+      <div class="form-group form-actions">
+        <button type="button" class="btn-secondary" id="cancel-fixture">Cancel</button>
+        <button type="submit" class="btn-primary">Save Fixture</button>
+      </div>
+      </form>
+    </div>
+    </div>
+  </div>
+
+  <!-- Modal for entering or updating a match result -->
+  <div id="result-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add/Update Result</h3>
+        <span class="modal-close" style="cursor:pointer;">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="result-form">
+          <div class="score-inputs">
+            <div class="team-score">
+              <label id="home-team-label">Home Team</label>
+              <input type="number" id="home-score" required min="0">
+            </div>
+            <div class="score-separator">-</div>
+            <div class="team-score">
+              <label id="away-team-label">Away Team</label>
+              <input type="number" id="away-score" required min="0">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fixture-status">Status</label>
+            <select id="fixture-status" required>
+              <option value="completed">Completed</option>
+              <option value="postponed">Postponed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group form-actions">
+            <button type="button" class="btn-secondary" id="cancel-result">Cancel</button>
+            <button type="submit" class="btn-primary">Save Result</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple footer at the bottom of the page -->
+  <footer class="cms-footer">
+    <p>&copy;2025 Fennec FC | Admin System</p>
+  </footer>
+
+  <!-- Scripts for authentication and managing fixtures -->
+  <script src="js/auth.js"></script>
+  <script src="js/fixtures.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Management | Fennec FC CMS</title>
+
+    <!-- Website tab icon and CSS stylesheets -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+
+<body>
+    <!-- This is the header at the top of the dashboard, including navigation and user info -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CMS DASHBOARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span id="username-display">Getting User ..</span>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- The main area of the dashboard, split into sidebar and main content -->
+    <div class="dashboard-container">
+        <!-- Sidebar on the left for navigation links -->
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+                    <li><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+                    <li><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+                    <li><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+                    <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+                    <li><a href="profile.html"><i class="icon-settings"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- This is where the main content for user management appears -->
+        <main class="dashboard-main">
+            <div class="content-header">
+                <h2>User Management</h2>
+                <button id="add-user-btn" class="btn-primary">Add New User</button>
+            </div>
+
+            <!-- Table showing the list of users -->
+            <div class="content-table-wrapper">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- User rows will be inserted here by JavaScript -->
+                        <tr>
+                            <td colspan="6" class="loading">Loading users...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Popup modal for adding or editing a user -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add User</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="user-form">
+                    <div class="form-group">
+                        <label for="user-username">Username</label>
+                        <input type="text" id="user-username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user-email">Email</label>
+                        <input type="email" id="user-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user-password">Password</label>
+                        <input type="password" id="user-password">
+                        <p class="form-hint">Leave blank to keep current password (when editing)</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user-role">Role</label>
+                        <select id="user-role" required>
+                            <option value="editor">Editor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-user">Cancel</button>
+                        <button type="submit" class="btn-primary">Save User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple footer at the bottom of the page -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- JavaScript files for authentication and user management logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/users.js"></script>
+</body>
+
+</html>

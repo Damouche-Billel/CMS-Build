@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Profile | Fennec FC CMS</title>
+
+    <!-- This sets the favicon and links to the main CSS files for the dashboard -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+
+<body>
+    <!-- The header at the top of the dashboard, showing the logo and user info -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CMS DASHBOARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span id="username-display">Getting User ..</span>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- The main layout: sidebar on the left, main content on the right -->
+    <div class="dashboard-container">
+        <!-- Sidebar with navigation links for different dashboard sections -->
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+                    <li><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+                    <li><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+                    
+                    <li><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+                    <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+                    <li class="active"><a href="#"><i class="active icon-settings"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- This is where the main content for the profile page appears -->
+        <main class="dashboard-main">
+            <div class="content-header">
+                <h2>My Profile</h2>
+            </div>
+
+            <!-- Everything related to the user's profile is grouped here -->
+            <div class="profile-section">
+                <!-- The card for updating username and email -->
+                <div class="profile-card">
+                    <h3>Profile Information</h3>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="profile-username">Username</label>
+                            <input type="text" id="profile-username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-email">Email</label>
+                            <input type="email" id="profile-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-role">Role</label>
+                            <input type="text" id="profile-role" readonly>
+                        </div>
+                        
+                        <div class="form-group form-actions">
+                            <button type="submit" class="btn-primary">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- The card for changing the user's password -->
+                <div class="profile-card">
+                    <h3>Change Password</h3>
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" required>
+                        </div>
+                        
+                        <div class="form-group form-actions">
+                            <button type="submit" class="btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Simple footer at the bottom of the page -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- These scripts handle authentication and profile updates -->
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+
+</html>

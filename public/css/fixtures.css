@@ -1,0 +1,261 @@
+/* Main section for fixtures, adds spacing and background styling */
+.fixtures-section {
+  margin-bottom: 30px;
+  background-color: #1c1c1c;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Section heading: gold color, spacing, and underline */
+.fixtures-section h3 {
+  color: #d4b24b;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+/* Grid layout for all fixture cards */
+.fixtures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Each fixture card: dark background, rounded corners, and shadow */
+.fixture-card {
+  background-color: #242424;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card hover effect: lifts card and increases shadow */
+.fixture-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Fixture date: smaller, lighter text */
+.fixture-date {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+/* Teams row: space between teams and center alignment */
+.fixture-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Team name: larger, bold, light color */
+.team {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f4f4f4;
+  flex: 1;
+}
+
+/* Home team: highlight with gold color */
+.home-team {
+  color: #d4b24b;
+}
+
+/* "VS" text between teams */
+.fixture-vs {
+  padding: 0 10px;
+  color: #777;
+}
+
+/* Score box: centered, bold, with background */
+.fixture-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  margin: 0 10px;
+  padding: 5px 10px;
+  background-color: #333;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Spacing between score numbers */
+.fixture-score span {
+  margin: 0 5px;
+}
+
+/* Details row: space between competition and status/result */
+.fixture-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #333;
+}
+
+/* Competition name: smaller, lighter text */
+.fixture-competition {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Status badge: small, rounded, dark background */
+.fixture-status {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  background-color: #333;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+/* Result badge: small, rounded, color depends on result */
+.fixture-result {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* Win result: green background and text */
+.fixture-result.win {
+  background-color: rgba(40, 167, 69, 0.2);
+  color: #2ecc71;
+}
+
+/* Loss result: red background and text */
+.fixture-result.loss {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #e74c3c;
+}
+
+/* Draw result: yellow background and text */
+.fixture-result.draw {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+/* Action buttons row: right-aligned, spaced */
+.fixture-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* General button styling for actions */
+.fixture-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+/* Edit button: yellow background */
+.btn-edit {
+  background-color: #ffc107;
+  color: #000;
+}
+
+/* Edit button hover: darker yellow */
+.btn-edit:hover {
+  background-color: #e0aa00;
+}
+
+/* Update result button: blue background */
+.btn-update-result {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+/* Update result button hover: darker blue */
+.btn-update-result:hover {
+  background-color: #138496;
+}
+
+/* Delete button: red background */
+.btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Delete button hover: darker red */
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+/* Score input row: center-aligned */
+.score-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Each team's score input: stacked label and input */
+.team-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 15px;
+}
+
+/* Score input label: gold and bold */
+.team-score label {
+  margin-bottom: 10px;
+  color: #d4b24b;
+  font-weight: bold;
+}
+
+/* Score input box: wide, centered text */
+.team-score input {
+  width: 60px;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 10px;
+}
+
+/* Separator between score inputs (like a dash) */
+.score-separator {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 5px;
+  margin-top: 25px;
+}
+
+/* Loading and empty state: center text across grid */
+.loading, .no-fixtures {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  /* Stack fixture cards in one column */
+  .fixtures-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stack teams vertically and add spacing */
+  .fixture-teams {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Add margin to VS text when stacked */
+  .fixture-vs {
+    margin: 5px 0;
+  }
+
+  /* Center team names on small screens */
+  .team {
+    text-align: center;
+  }
+}

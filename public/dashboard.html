@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | Fennec FC CMS</title>
+
+    <!-- This sets the favicon and links to the main CSS files for styling -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+    <!-- The header at the top of the dashboard, including navigation and user info -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CMS DASHBOARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span id="username-display">Getting User ..</span>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- This is the sidebar on the left, where you can navigate to different sections -->
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-nav">
+                <ul>
+                    <li class="active"><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+                    <li><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+                    <li><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+                    <li><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+                    <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+                    <li><a href="profile.html"><i class="icon-settings"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- The main area where dashboard content appears -->
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <h2>Welcome to Fennec FC CMS</h2>
+                <p>Content Management System Dashboard</p>
+            </div>
+
+            <!-- Here you can see a quick summary of stats like articles, fixtures, and merchandise -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="icon-news"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>0</h3>
+                        <p>News Articles</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="icon-fixtures"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>0</h3>
+                        <p>Upcoming Fixtures</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="icon-merchandise"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>0</h3>
+                        <p>Merchandise Items</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- This section will show the most recent activities on the CMS -->
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="loading">Loading recent activity...</div>
+                </div>
+            </div>
+
+            <!-- Quick access buttons for adding new content easily -->
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="btn-action">Add News Article</button>
+                    <button class="btn-action">Add Fixture</button>
+                    <button class="btn-action">Add Merchandise</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Simple footer at the bottom of the page -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- Scripts below handle authentication and dashboard logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        // When the page loads, check if the user is logged in.
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to verify authentication with the server first.
+            fetch('/api/auth/check-auth', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success || !data.isAuthenticated) {
+                    // If not logged in, send the user to the login page.
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Auth check error:', error);
+                
+                // If the server check fails, see if there's user data in localStorage.
+                const userData = localStorage.getItem('fennec_user');
+                if (!userData) {
+                    // If there's no user info, redirect to login.
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

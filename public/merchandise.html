@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manage Merchandise | Fennec FC CMS</title>
+
+    <!-- Tab icon and styles -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+
+<body>
+    <!-- CMS Header with navigation -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CMS DASHBOARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span id="username-display">Getting User ..</span>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main dashboard content -->
+    <div class="dashboard-container">
+        <!-- Sidebar navigation -->
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+                    <li><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+                    <li><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+                    
+                    <li class="active"><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+                    <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+                    <li><a href="profile.html"><i class="icon-settings"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="dashboard-main">
+            <div class="content-header">
+                <h2>Merchandise Management</h2>
+                <button id="add-merchandise-btn" class="btn-primary">Add New Item</button>
+            </div>
+
+            <!-- Merchandise filters -->
+            <div class="content-filters">
+                <div class="filter-group">
+                    <label for="filter-category">Category:</label>
+                    <select id="filter-category">
+                        <option value="all">All Categories</option>
+                        <option value="Jerseys">Jerseys</option>
+                        <option value="Apparel">Apparel</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Souvenirs">Souvenirs</option>
+                        <option value="Equipment">Equipment</option>
+                    </select>
+                </div>
+
+                <div class="filter-group search-group">
+                    <input type="text" id="search-content" placeholder="Search merchandise...">
+                    <button class="btn-search"><i class="icon-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Content table -->
+            <div class="content-table-wrapper">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Featured</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Merchandise items will be loaded here -->
+                        <tr>
+                            <td colspan="6" class="loading">Loading merchandise...</td>
+                        </tr>
+                        <tr>
+                            <td>Sample Item</td>
+                            <td>Jerseys</td>
+                            <td>£29.99</td>
+                            <td>50</td>
+                            <td>No</td>
+                            <td>
+                                <button class="btn-view" data-id="${merchandise._id}">
+                                    <i class="icon-view"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="btn-page">&laquo;</button>
+                <button class="btn-page active">1</button>
+                <button class="btn-page">2</button>
+                <button class="btn-page">3</button>
+                <button class="btn-page">&raquo;</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Merchandise Modal -->
+    <div id="merchandise-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Merchandise Item</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="merchandise-form">
+                    <div class="form-group">
+                        <label for="merchandise-name">Name</label>
+                        <input type="text" id="merchandise-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-category">Category</label>
+                        <select id="merchandise-category" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Jerseys">Jerseys</option>
+                            <option value="Apparel">Apparel</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Souvenirs">Souvenirs</option>
+                            <option value="Equipment">Equipment</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-price">Price (£)</label>
+                        <input type="number" id="merchandise-price" required min="0" step="0.01">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-stock">Stock</label>
+                        <input type="number" id="merchandise-stock" required min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-description">Description</label>
+                        <textarea id="merchandise-description" rows="6" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-image">Image</label>
+                        <div id="current-image-container" style="display: none; margin-bottom: 10px;"></div>
+                        <input type="file" id="merchandise-image" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="merchandise-featured">Featured</label>
+                        <input type="checkbox" id="merchandise-featured">
+                    </div>
+                    
+                    <div class="form-group form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-merchandise">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simplified footer -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- JavaScript for merchandise management -->
+    <script src="js/auth.js"></script>
+    <script src="js/merchandise.js"></script>
+</body>
+
+</html>

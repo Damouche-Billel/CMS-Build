@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login | Fennec FC CMS</title>
+
+    <!-- This sets the tab icon and links to the main stylesheet -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body style="background-color: #1c1c1c;">
+    <!-- Header: Just the logo and titles, no navigation links -->
+    <header>
+        <div class="cms-header">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CONTENT MANAGEMENT SYSTEM</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main login area for admins -->
+    <section class="bg-2" style="min-height: 70vh;">
+        <div class="container">
+            <!-- Section heading for the login form -->
+            <span class="leading-text centre style-2">ADMIN LOGIN</span>
+
+            <!-- This is the login form where admins enter their credentials -->
+            <form class="contact-form" id="loginForm" method="post">
+                <div id="error-message" class="error-message"></div>
+                
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="@AdminUsername" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="btn-primary btn-inline">Login to CMS</button>
+                
+                <p class="form-link">
+                    <a href="forgot-password.html">Forgot your password?</a>
+                </p>
+                
+                <p class="form-link">
+                    Don't have an account? <a href="register.html">Register here</a>
+                </p>
+            </form>
+
+            <!-- Contact information in case admins need help -->
+            <div class="support-info">
+                <h4>Technical Support</h4>
+                <p>Email: admin@fennecfc.com</p>
+                <p>Phone: +44 7388521835</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with copyright -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- This script handles the login authentication logic -->
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

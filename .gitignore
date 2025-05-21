@@ -1,0 +1,43 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables (contains sensitive info)
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for code coverage
+coverage/
+
+# Build output
+build/
+dist/
+
+# Dependency directories
+.npm
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variable files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>News Articles | Fennec FC CMS</title>
+
+    <!-- Favicon and stylesheets for the dashboard -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/brand-logo.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+
+<body>
+    <!-- This is the header at the top of the dashboard, including navigation and user info -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="nav-logo">
+                <div class="nav-title">
+                    <img src="assets/images/brand-logo.png" alt="Fennec FC Logo" class="logo-animation">
+                    <h1>FENNEC FC</h1>
+                    <h2>CMS DASHBOARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span id="username-display">Getting User ..</span>
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- The sidebar on the left lets you navigate between different sections -->
+        <aside class="dashboard-sidebar">
+            <nav class="dashboard-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+                    <li class="active"><a href="news.html"><i class="icon-news"></i> News Articles</a></li>
+                    <li><a href="fixtures.html"><i class="icon-fixtures"></i> Fixtures</a></li>
+                    
+                    <li><a href="merchandise.html"><i class="icon-merchandise"></i> Merchandise</a></li>
+                    <li class="admin-only locked"><a href="users.html"><i class="icon-users"></i> User Management</a></li>
+                    <li><a href="profile.html"><i class="icon-settings"></i>Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- This is where the main content for the page appears -->
+        <main class="dashboard-main">
+            <div class="content-header">
+                <h2>News Articles</h2>
+                <button id="add-news-btn" class="btn-primary">Add News Article</button>
+            </div>
+
+            <!-- Here you can filter the news articles by status, category, or search for something specific -->
+            <div class="content-filters">
+                <div class="filter-group">
+                    <label for="filter-status">Status:</label>
+                    <select id="filter-status">
+                        <option value="all">All</option>
+                        <option value="published">Published</option>
+                        <option value="draft">Draft</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-category">Category:</label>
+                    <select id="filter-category">
+                        <option value="all">All</option>
+                        <option value="Team News">Team News</option>
+                        <option value="Match Reports">Match Reports</option>
+                        <option value="Interviews">Interviews</option>
+                        <option value="Community">Community</option>
+                    </select>
+                </div>
+                <div class="filter-group search-group">
+                    <input type="text" id="search-content" placeholder="Search articles...">
+                    <button class="btn-search"><i class="icon-search"></i></button>
+                </div>
+            </div>
+
+            <!-- This table shows all the news articles. It will be filled in by JavaScript. -->
+            <div class="content-table-wrapper">
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- The articles will appear here once loaded -->
+                        <tr>
+                            <td colspan="6" class="loading">Loading articles...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- If there are lots of articles, you can use these controls to move between pages -->
+            <div class="pagination"></div>
+        </main>
+    </div>
+
+    <!-- This modal pops up when you want to add or edit a news article -->
+    <div id="news-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add News Article</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="news-form">
+                    <div class="form-group">
+                        <label for="news-title">Title</label>
+                        <input type="text" id="news-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-category">Category</label>
+                        <select id="news-category" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Team News">Team News</option>
+                            <option value="Match Reports">Match Reports</option>
+                            <option value="Interviews">Interviews</option>
+                            <option value="Community">Community</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-content">Content</label>
+                        <textarea id="news-content" rows="8" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-status">Status</label>
+                        <select id="news-status" required>
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-news">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Article</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- The footer just shows a simple copyright notice -->
+    <footer class="cms-footer">
+        <p>&copy;2025 Fennec FC | Admin System</p>
+    </footer>
+
+    <!-- These scripts handle authentication and news management functionality -->
+    <script src="js/auth.js"></script>
+    <script src="js/news.js"></script>
+</body>
+
+</html>
