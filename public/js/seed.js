@@ -11,7 +11,7 @@ const Fixture = require('./models/Fixture');
 dotenv.config();
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fennecFC', {
+mongoose.connect(process.env.DB_URI || 'mongodb://localhost:27017/fennecFC', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

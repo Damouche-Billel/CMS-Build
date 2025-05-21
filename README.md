@@ -65,7 +65,7 @@ npm install
 3. **Configure environment variables:**
 Create a `.env` file:
 ```env
-MONGODB_URI=your_mongodb_uri
+DB_URI=your_DB_URI
 SESSION_SECRET=your_session_secret
 EMAIL_HOST=smtp.ethereal.email
 EMAIL_PORT=587
