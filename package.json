@@ -9,6 +9,7 @@
     "seed": "node seed.js"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.812.0",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
