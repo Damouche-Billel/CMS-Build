@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
+const connectDB = require('./config/db');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -19,14 +20,6 @@ const fixtureRoutes = require('./routes/fixtures');
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Connect to MongoDB (Atlas or local)
-mongoose.connect(process.env.DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected successfully'))
-.catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware
 app.use(express.json());
@@ -116,7 +109,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: 'Server Error' });
 });
 
-// Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Connect to MongoDB
+connectDB()
+  .then(() => {
+    // Start server only after DB connection
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch(err => {
+    console.error('Failed to connect to MongoDB:', err);
+    process.exit(1);
+  });
 
 module.exports = app;
