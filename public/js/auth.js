@@ -3,53 +3,77 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('registerForm');
     const errorMessage = document.getElementById('error-message');
 
+    function setLoading(formType, isLoading) {
+        const spinner = document.getElementById(`${formType}-spinner`);
+        const button = document.getElementById(`${formType}-button`);
+        
+        if (spinner && button) {
+            spinner.style.display = isLoading ? 'block' : 'none';
+            button.disabled = isLoading;
+            button.textContent = isLoading ? 
+                (formType === 'login' ? 'Logging in...' : 'Registering...') : 
+                (formType === 'login' ? 'Login to CMS' : 'Register');
+        }
+    }
+
     if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
+        loginForm.addEventListener('submit', async function(event) {
             event.preventDefault();
+            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+
             if (errorMessage) {
                 errorMessage.textContent = '';
                 errorMessage.style.display = 'none';
             }
+
             if (!username || !password) {
                 showError('Please enter both username and password');
                 return;
             }
-            fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include'
-            })
-            .then(r => r.json())
-            .then(data => {
+
+            setLoading('login', true);
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
                 if (data.success) {
                     localStorage.setItem('fennec_user', JSON.stringify(data.user));
                     window.location.href = 'dashboard.html';
                 } else {
                     showError(data.message || 'Invalid username or password');
                 }
-            })
-            .catch(() => showError('Login failed. Please try again later.'));
+            } catch (error) {
+                showError('Login failed. Please try again later.');
+            } finally {
+                setLoading('login', false);
+            }
         });
     }
 
     if (registerForm) {
-        registerForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+        registerForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
             
-            // Get form values
             const username = document.getElementById('reg-username').value;
             const email = document.getElementById('reg-email').value;
             const password = document.getElementById('reg-password').value;
             const confirmPassword = document.getElementById('reg-confirm-password').value;
 
-            // Basic validation
             if (password !== confirmPassword) {
                 showError('Passwords do not match');
                 return;
             }
+
+            setLoading('register', true);
 
             try {
                 const response = await fetch('/api/auth/register', {
@@ -75,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Registration error:', error);
                 showError('Registration failed. Please try again.');
+            } finally {
+                setLoading('register', false);
             }
         });
     }

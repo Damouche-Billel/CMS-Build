@@ -6,14 +6,18 @@ const bcrypt = require('bcryptjs'); //Make sure this is at the top
 //Register user
 exports.register = async (req, res) => {
   try {
+    console.log('Registration attempt:', req.body.username);
     const { username, email, password } = req.body;
 
-    //Check if user already exists
+    // Log the connection status
+    console.log('Database connection state:', mongoose.connection.readyState);
+
     const userExists = await User.findOne({ 
       $or: [{ email }, { username }] 
     });
 
     if (userExists) {
+      console.log('User already exists:', userExists.username);
       return res.status(400).json({ 
         success: false, 
         message: userExists.username === username 
@@ -22,53 +26,23 @@ exports.register = async (req, res) => {
       });
     }
 
-    //Create new user
     const user = await User.create({
       username,
       email,
       password,
-      role: 'editor' //Default role
+      role: 'editor'
     });
 
-    //Generate verification token
-    const verificationToken = user.generateVerificationToken();
-    await user.save();
-
-    //Create verification URL
-    const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email/${verificationToken}`;
-
-    //Send verification email
-    const message = `
-      <h1>Email Verification</h1>
-      <p>Please verify your email by clicking on the following link:</p>
-      <a href="${verificationUrl}" target="_blank">Verify Email</a>
-    `;
-
-    try {
-      await sendEmail({
-        email: user.email,
-        subject: 'Fennec FC - Email Verification',
-        message
-      });
-
-      res.status(201).json({
-        success: true,
-        message: 'User registered successfully. Please check your email to verify your account.'
-      });
-    } catch (err) {
-      user.verificationToken = undefined;
-      await user.save();
-
-      return res.status(500).json({
-        success: false,
-        message: 'Email could not be sent'
-      });
-    }
+    console.log('User created successfully:', user.username);
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully'
+    });
   } catch (err) {
     console.error('Registration error:', err);
     res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: err.message || 'Server error'
     });
   }
 };
