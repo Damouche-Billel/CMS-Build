@@ -96,7 +96,7 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    //Check if user exists
+    // Check if user exists
     const user = await User.findOne({ username }).select('+password');
     if (!user) {
       return res.status(401).json({
@@ -105,7 +105,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    //Check if password matches
+    // Check if password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(401).json({
@@ -114,27 +114,34 @@ exports.login = async (req, res) => {
       });
     }
 
-    //Create session
+    // Create session
     req.session.user = {
       id: user._id,
       username: user.username,
       role: user.role
     };
 
-    //Make sure cookie is set
-    res.set({
-      'Cache-Control': 'no-store',
-      'Pragma': 'no-cache'
-    });
-
-    //Send successful response
-    res.status(200).json({
-      success: true,
-      user: {
-        username: user.username,
-        email: user.email,
-        role: user.role
+    // Save session explicitly
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Session error'
+        });
       }
+
+      console.log('Session created:', req.session);
+
+      // Send successful response
+      res.status(200).json({
+        success: true,
+        user: {
+          username: user.username,
+          email: user.email,
+          role: user.role
+        }
+      });
     });
   } catch (err) {
     console.error('Login error:', err);
@@ -143,6 +150,24 @@ exports.login = async (req, res) => {
       message: 'Server error'
     });
   }
+};
+
+// Add a check-auth endpoint
+exports.checkAuth = async (req, res) => {
+  console.log('Session:', req.session);
+  
+  if (req.session && req.session.user) {
+    return res.status(200).json({
+      success: true,
+      isAuthenticated: true,
+      user: req.session.user
+    });
+  }
+
+  res.status(401).json({
+    success: false,
+    isAuthenticated: false
+  });
 };
 
 //Logout user

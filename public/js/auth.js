@@ -124,20 +124,39 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkAuthStatus() {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         const protectedPages = ['dashboard.html', 'news.html', 'fixtures.html', 'merchandise.html', 'profile.html', 'users.html'];
+        
         fetch('/api/auth/check-auth', {
             method: 'GET',
-            credentials: 'include'
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.success && data.isAuthenticated) {
-                if (data.user) localStorage.setItem('fennec_user', JSON.stringify(data.user));
-                updateUserDisplay(data.user);
-                // ...rest of your logic
+            credentials: 'include',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
             }
-            // ...rest of your logic
         })
-        .catch(() => fallbackAuthCheck(currentPage, protectedPages));
+        .then(response => response.json())
+        .then(data => {
+            console.log('Auth check response:', data);
+            
+            if (data.success && data.isAuthenticated) {
+                if (data.user) {
+                    localStorage.setItem('fennec_user', JSON.stringify(data.user));
+                    updateUserDisplay(data.user);
+                }
+                
+                if (['login.html', 'register.html', 'index.html', ''].includes(currentPage)) {
+                    window.location.href = 'dashboard.html';
+                }
+            } else {
+                localStorage.removeItem('fennec_user');
+                if (protectedPages.includes(currentPage)) {
+                    window.location.href = 'login.html';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Auth check error:', error);
+            fallbackAuthCheck(currentPage, protectedPages);
+        });
     }
 
     function fallbackAuthCheck(currentPage, protectedPages) {

@@ -38,19 +38,21 @@ app.use(express.static('public'));
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fennecFCsecretkey2025',
-  resave: false,
-  saveUninitialized: false,
+  resave: true, // Changed to true
+  saveUninitialized: true, // Changed to true
   store: MongoStore.create({
-    mongoUrl: process.env.DB_URI,
+    mongoUrl: process.env.MONGODB_URI || process.env.DB_URI, // Added fallback
     collectionName: 'sessions',
-    ttl: 24 * 60 * 60, // 1 day
+    ttl: 24 * 60 * 60,
     autoRemove: 'native',
-    touchAfter: 24 * 3600 // 24 hours
+    crypto: {
+      secret: process.env.SESSION_SECRET || 'fennecFCsecretkey2025'
+    }
   }),
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: false, // Set to false for development
     sameSite: 'lax'
   }
 }));
