@@ -11,28 +11,31 @@ const ses = new SESClient({
 const sendEmail = async (options) => {
   try {
     const params = {
-      Source: process.env.AWS_SES_FROM_EMAIL,
+      Source: `Fennec FC <noreply@${process.env.DOMAIN_NAME}>`, // Update this
       Destination: {
         ToAddresses: [options.email]
       },
       Message: {
         Subject: {
-          Data: options.subject
+          Data: options.subject,
+          Charset: 'UTF-8'
         },
         Body: {
           Html: {
-            Data: options.message
+            Data: options.message,
+            Charset: 'UTF-8'
           }
         }
       }
     };
 
     const command = new SendEmailCommand(params);
-    await ses.send(command);
-    console.log('Email sent successfully');
+    const result = await ses.send(command);
+    console.log('Email sent successfully:', result.MessageId);
+    return true;
   } catch (error) {
-    console.error('SES error:', error);
-    throw new Error('Email sending failed');
+    console.error('SES error:', error.message);
+    throw new Error(`Email sending failed: ${error.message}`);
   }
 };
 
