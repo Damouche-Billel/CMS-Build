@@ -10,8 +10,13 @@ const ses = new SESClient({
 
 const sendEmail = async (options) => {
   try {
+    // Use fallback during SSL setup
+    const sourceEmail = process.env.USE_DOMAIN_EMAIL === 'true'
+      ? `Fennec FC <noreply@${process.env.DOMAIN_NAME}>`
+      : process.env.AWS_SES_FROM_EMAIL;
+
     const params = {
-      Source: `Fennec FC <noreply@${process.env.DOMAIN_NAME}>`, // Update this
+      Source: sourceEmail,
       Destination: {
         ToAddresses: [options.email]
       },
