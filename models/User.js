@@ -62,7 +62,7 @@ UserSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-//Generate verification token
+// Generate verification token
 UserSchema.methods.generateVerificationToken = function() {
   const verificationToken = crypto.randomBytes(20).toString('hex');
   

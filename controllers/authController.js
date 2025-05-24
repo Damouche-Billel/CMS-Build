@@ -48,10 +48,46 @@ exports.register = async (req, res) => {
       role: 'editor'
     });
 
+    // Generate a verification token
+    const verificationToken = user.generateVerificationToken();
+    await user.save();
+
+    // Create verification URL
+    const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email/${verificationToken}`;
+
+    // Send welcome email with verification link
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Welcome to Fennec FC CMS - Verify Your Email',
+        message: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #d4b24b; text-align: center;">Welcome to Fennec FC CMS!</h1>
+            <p>Hello ${user.username},</p>
+            <p>Thank you for registering with Fennec FC Content Management System. We're excited to have you on board!</p>
+            <p>To complete your registration and verify your email address, please click the button below:</p>
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${verificationUrl}" style="background-color: #d4b24b; color: #000; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold;">Verify Email Address</a>
+            </div>
+            <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
+            <p><a href="${verificationUrl}">${verificationUrl}</a></p>
+            <p>Your account will need to be approved by an administrator before you can access all features of the CMS.</p>
+            <p>If you have any questions, please contact our support team at admin@fennecfc.com.</p>
+            <p>Best regards,<br>The Fennec FC Team</p>
+          </div>
+        `
+      });
+
+      console.log('Welcome email sent successfully to:', user.email);
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+      // Continue with registration even if email fails
+    }
+
     console.log('User created successfully:', user.username);
     res.status(201).json({
       success: true,
-      message: 'User registered successfully'
+      message: 'User registered successfully. Please check your email to verify your account.'
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -76,11 +112,12 @@ exports.verifyEmail = async (req, res) => {
       });
     }
 
-    //Update user verification status
+    // Update user verification status
     user.isVerified = true;
     user.verificationToken = undefined;
     await user.save();
 
+    // Redirect to login page with success parameter
     res.redirect('/login.html?verified=true');
   } catch (err) {
     console.error('Email verification error:', err);

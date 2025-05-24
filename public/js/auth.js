@@ -204,4 +204,20 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'login.html';
         });
     }
+
+    // Check URL parameters on login page
+    if (window.location.href.includes('login.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('verified') === 'true') {
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.style.display = 'block';
+            successMessage.textContent = 'Email verified successfully! You can now login.';
+            
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.prepend(successMessage);
+            }
+        }
+    }
 });
