@@ -2,15 +2,18 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      ssl: true,
-      tls: true,
-      tlsAllowInvalidCertificates: false,
-      retryWrites: true,
-      w: 'majority'
-    });
+    const conn = await mongoose.connect(
+      process.env.MONGODB_URI || process.env.DB_URI, // Use MONGODB_URI first
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        ssl: true,
+        tls: true,
+        tlsAllowInvalidCertificates: false,
+        retryWrites: true,
+        w: 'majority'
+      }
+    );
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     console.log(`Database Name: ${conn.connection.name}`);
