@@ -181,16 +181,3 @@ fennec-fc-cms/
 - **Live Demo:** [https://billel-university.com](https://billel-university.com)
 - **GitHub Repository:** [https://github.com/Damouche-Billel/University-Assignment-4FSC0WE004/tree/main/CMS%20Development](https://github.com/Damouche-Billel/University-Assignment-4FSC0WE004/tree/main/CMS%20Development)
 
----
-
-## Author
-
-Billy Langdown
-
----
-
-## License
-
-MIT License
-
----
